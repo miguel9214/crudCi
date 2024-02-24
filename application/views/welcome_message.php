@@ -69,12 +69,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
+			<?php  $id=1; foreach ($persons as $person): ?>
+                <tr>
+                    <td><?php echo $id++ ?></td>
+                    <td><?php echo $person['name']; ?></td>
+                    <td><?php echo $person['last_name']; ?></td>
+                    <td><?php echo $person['birthday']; ?></td>
+                    <td><?php echo $person['sex']; ?></td>
+                </tr>
+            <?php endforeach; ?>
 			</tbody>
 		</table>
 	</div>

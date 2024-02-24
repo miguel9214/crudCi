@@ -12,16 +12,15 @@ class Welcome extends CI_Controller
 
 		$this->load->helper('form');
 		$this->load->helper('url');
-		// En tu controlador o modelo de CodeIgniter
-		// echo current_url(); // Para obtener la URL actual completa
-		// echo uri_string();  // Para obtener el segmento de la URI actual
+		$this->load->model('Person_model');
 
 	}
 
 
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$data['persons'] = $this->Person_model->get_all_people();
+		$this->load->view('welcome_message',$data);
 	}
 
 
@@ -29,6 +28,7 @@ class Welcome extends CI_Controller
 	{
 		
 		$person = array(
+
 			'name' => $this->input->post('name'),
 			'last_name' => $this->input->post('last_name'),
 			'birthday' => $this->input->post('birthday'),
@@ -36,6 +36,11 @@ class Welcome extends CI_Controller
 
 		);
 
-		var_dump($person);
+		$this->Person_model->insert_person($person);
+
+
+
+		redirect('welcome');
+
 	}
 }
