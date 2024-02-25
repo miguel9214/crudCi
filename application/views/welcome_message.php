@@ -9,7 +9,7 @@
 </head>
 
 <body>
-     <!-- Navegador -->
+	<!-- Navegador -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">CRUD CODEIGNITER</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,9 +17,9 @@
 		</button>
 	</nav>
 
-
+	<!-- Formulario para guardar -->
 	<div class="container mt-4">
-		<?php echo form_open('welcome/store'); ?>
+		<?php echo form_open('welcome/store', 'onsubmit="return validateForm()"'); ?>
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<div class="form-group">
@@ -53,8 +53,7 @@
 		</div>
 		<?php echo form_close(); ?>
 	</div>
-
-
+	<!-- Tabla para mostrar datos -->
 	<div class="container mt-4">
 		<div class="container text-center">
 			<h2>List persons</h2>
@@ -98,7 +97,7 @@
 								</div>
 								<div class="modal-body">
 									<!-- Formulario con los mismos campos -->
-									<?php echo form_open('welcome/update/' . $person['id']); ?>
+									<?php echo form_open('welcome/update/' . $person['id'], 'id="editForm"'); ?>
 									<div class="form-group">
 										<label for="editName">Name</label>
 										<input type="text" class="form-control" id="editName" name="edit_name" value="<?php echo $person['name']; ?>">
@@ -118,7 +117,7 @@
 											<option value="femenino" <?php echo ($person['sex'] == 'femenino') ? 'selected' : ''; ?>>Femenino</option>
 										</select>
 									</div>
-									<button type="submit" class="btn btn-primary">Save changes</button>
+									<button type="submit" class="btn btn-primary" id="saveChangesBtn">Save changes</button>
 									<?php echo form_close(); ?>
 								</div>
 							</div>
@@ -132,6 +131,43 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+	<script>
+		function validateForm() {
+			var name = document.getElementById('exampleInputName').value;
+			var lastName = document.getElementById('exampleInputLstName').value;
+			var birthday = document.getElementById('exampleInputBirthday').value;
+			var sex = document.getElementById('exampleInputSex').value;
+
+			if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
+				alert('Todos los campos son obligatorios. Por favor, complete todos los campos.');
+				return false;
+			}
+
+			return true;
+		}
+
+
+		function validateFormModal() {
+			var name = document.getElementById('editName').value;
+			var lastName = document.getElementById('editLastName').value;
+			var birthday = document.getElementById('editBirthday').value;
+			var sex = document.getElementById('editSex').value;
+
+			if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
+				alert('Todos los campos son obligatorios. Por favor, complete todos los campos.');
+				return false;
+			}
+
+			return true;
+		}
+
+		document.getElementById('saveChangesBtn').addEventListener('click', function (event) {
+            if (!validateFormModal()) {
+                event.preventDefault(); // Evitar que el formulario se envíe si no es válido
+            }
+        });
+		
+	</script>
 </body>
 
 </html>

@@ -12,40 +12,52 @@ class Welcome extends CI_Controller
 		$this->load->helper('form');
 		$this->load->helper('url');
 		$this->load->model('Person_model');
-
 	}
 
 	public function index()
 	{
 		$data['persons'] = $this->Person_model->get_all_people();
-		$this->load->view('welcome_message',$data);
+		$this->load->view('welcome_message', $data);
 	}
 
 	public function store()
 	{
-		$person = array(
+		$this->load->library('form_validation');
 
-			'name' => $this->input->post('name'),
-			'last_name' => $this->input->post('last_name'),
-			'birthday' => $this->input->post('birthday'),
-			'sex' => $this->input->post('sex'),
+		// Reglas de validación
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'required');
+		$this->form_validation->set_rules('birthday', 'Birthday', 'required');
+		$this->form_validation->set_rules('sex', 'Sex', 'required');
 
-		);
+		if ($this->form_validation->run() == FALSE) {
+			// Si la validación falla, vuelve a cargar la vista principal con errores
+			$data['persons'] = $this->Person_model->get_all_people();
+			$this->load->view('welcome_message', $data);
+		} else {
+			// Si la validación es exitosa, procesa los datos y redirige
+			$person = array(
+				'name' => $this->input->post('name'),
+				'last_name' => $this->input->post('last_name'),
+				'birthday' => $this->input->post('birthday'),
+				'sex' => $this->input->post('sex'),
+			);
 
-		$this->Person_model->insert_person($person);
+			$this->Person_model->insert_person($person);
 
-		redirect('welcome');
-
+			redirect('welcome');
+		}
 	}
 
 	public function edit($id)
 	{
 		$data['person'] = $this->Person_model->get_person_by_id($id);
-		$this->load->view('edit_person', $data);
+		$this->load->view('welcome_message', $data);
 	}
 
 	public function update($id)
 	{
+
 		$updated_data = array(
 			'name' => $this->input->post('edit_name'),
 			'last_name' => $this->input->post('edit_last_name'),
