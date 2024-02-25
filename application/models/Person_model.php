@@ -10,4 +10,9 @@ class Person_model extends CI_Model {
         $this->db->insert('persons', $data);
         // return $this->db->insert_id();
     }
+
+    public function delete_person($id) {
+        $this->db->where('id', $id);
+        $this->db->delete('persons');
+    }
 }

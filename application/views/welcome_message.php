@@ -69,15 +69,22 @@
 				</tr>
 			</thead>
 			<tbody>
-			<?php  $id=1; foreach ($persons as $person): ?>
-                <tr>
-                    <td><?php echo $id++ ?></td>
-                    <td><?php echo $person['name']; ?></td>
-                    <td><?php echo $person['last_name']; ?></td>
-                    <td><?php echo $person['birthday']; ?></td>
-                    <td><?php echo $person['sex']; ?></td>
-                </tr>
-            <?php endforeach; ?>
+				<?php $id = 1;
+				foreach ($persons as $person) : ?>
+					<tr>
+						<td><?php echo $id++ ?></td>
+						<td><?php echo $person['name']; ?></td>
+						<td><?php echo $person['last_name']; ?></td>
+						<td><?php echo $person['birthday']; ?></td>
+						<td><?php echo $person['sex']; ?></td>
+						<td>
+							<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal<?php echo $person['id']; ?>">
+								Editar
+							</button>
+							<a href="<?php echo base_url('welcome/delete/' . $person['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</a>
+						</td>
+					</tr>
+				<?php endforeach; ?>
 			</tbody>
 		</table>
 	</div>

@@ -26,7 +26,6 @@ class Welcome extends CI_Controller
 
 	public function store()
 	{
-		
 		$person = array(
 
 			'name' => $this->input->post('name'),
@@ -38,9 +37,14 @@ class Welcome extends CI_Controller
 
 		$this->Person_model->insert_person($person);
 
-
-
 		redirect('welcome');
 
+	}
+
+	public function delete($id)
+	{
+		$this->Person_model->delete_person($id);
+
+		redirect('welcome');
 	}
 }

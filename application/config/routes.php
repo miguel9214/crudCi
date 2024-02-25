@@ -53,6 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 
 $route['welcome/store'] = 'welcome/store';
+$route['welcome/delete/(:num)'] = 'welcome/delete/$1';
 
 
 
