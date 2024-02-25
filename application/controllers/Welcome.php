@@ -38,6 +38,26 @@ class Welcome extends CI_Controller
 
 	}
 
+	public function edit($id)
+	{
+		$data['person'] = $this->Person_model->get_person_by_id($id);
+		$this->load->view('edit_person', $data);
+	}
+
+	public function update($id)
+	{
+		$updated_data = array(
+			'name' => $this->input->post('edit_name'),
+			'last_name' => $this->input->post('edit_last_name'),
+			'birthday' => $this->input->post('edit_birthday'),
+			'sex' => $this->input->post('edit_sex')
+		);
+
+		$this->Person_model->update_person($id, $updated_data);
+
+		redirect('welcome');
+	}
+
 	public function delete($id)
 	{
 		$this->Person_model->delete_person($id);

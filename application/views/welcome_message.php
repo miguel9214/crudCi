@@ -15,6 +15,8 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 	</nav>
+
+
 	<div class="container mt-4">
 		<?php echo form_open('welcome/store'); ?>
 		<div class="row justify-content-center">
@@ -84,11 +86,51 @@
 							<a href="<?php echo base_url('welcome/delete/' . $person['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</a>
 						</td>
 					</tr>
+					<div class="modal fade" id="editModal<?php echo $person['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="editModalLabel">Edit person</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<!-- Formulario con los mismos campos -->
+									<?php echo form_open('welcome/update/' . $person['id']); ?>
+									<div class="form-group">
+										<label for="editName">Name</label>
+										<input type="text" class="form-control" id="editName" name="edit_name" value="<?php echo $person['name']; ?>">
+									</div>
+									<div class="form-group">
+										<label for="editLastName">Last name</label>
+										<input type="text" class="form-control" id="editLastName" name="edit_last_name" value="<?php echo $person['last_name']; ?>">
+									</div>
+									<div class="form-group">
+										<label for="editBirthday">Birthday</label>
+										<input type="date" class="form-control" id="editBirthday" name="edit_birthday" value="<?php echo $person['birthday']; ?>">
+									</div>
+									<div class="form-group">
+										<label for="editSex">Sex</label>
+										<select class="custom-select" id="editSex" name="edit_sex">
+											<option value="masculino" <?php echo ($person['sex'] == 'masculino') ? 'selected' : ''; ?>>Masculino</option>
+											<option value="femenino" <?php echo ($person['sex'] == 'femenino') ? 'selected' : ''; ?>>Femenino</option>
+										</select>
+									</div>
+									<button type="submit" class="btn btn-primary">Save changes</button>
+									<?php echo form_close(); ?>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				<?php endforeach; ?>
 			</tbody>
 		</table>
 	</div>
-
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 </body>
 
 </html>
