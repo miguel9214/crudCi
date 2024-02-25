@@ -9,6 +9,7 @@
 </head>
 
 <body>
+     <!-- Navegador -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">CRUD CODEIGNITER</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +48,7 @@
 		</div>
 		<div class="row justify-content-center mt-3 form-group">
 			<div class="col-12 col-sm-6 col-md-3">
-				<button type="submit" class="btn btn-primary btn-block">Submit</button>
+				<button type="submit" class="btn btn-primary btn-block">Save</button>
 			</div>
 		</div>
 		<?php echo form_close(); ?>
