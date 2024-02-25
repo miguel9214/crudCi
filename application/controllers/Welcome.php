@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Welcome extends CI_Controller
 {
 
-
 	public function __construct()
 	{
 
@@ -16,13 +15,11 @@ class Welcome extends CI_Controller
 
 	}
 
-
 	public function index()
 	{
 		$data['persons'] = $this->Person_model->get_all_people();
 		$this->load->view('welcome_message',$data);
 	}
-
 
 	public function store()
 	{

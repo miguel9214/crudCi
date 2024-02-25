@@ -54,7 +54,7 @@
 
 	<div class="container mt-4">
 		<div class="container text-center">
-			<h2>Personas registradas</h2>
+			<h2>List persons</h2>
 		</div>
 		<table class="table">
 			<thead>
