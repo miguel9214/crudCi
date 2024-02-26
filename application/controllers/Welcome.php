@@ -19,6 +19,7 @@ class Welcome extends CI_Controller
 		$data['persons'] = $this->Person_model->get_all_people();
 		$this->load->view('welcome_message', $data);
 	}
+	
 
 	public function store()
 	{

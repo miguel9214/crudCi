@@ -133,10 +133,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 	<script>
 		function validateForm() {
-			var name = document.getElementById('exampleInputName').value;
-			var lastName = document.getElementById('exampleInputLstName').value;
-			var birthday = document.getElementById('exampleInputBirthday').value;
-			var sex = document.getElementById('exampleInputSex').value;
+			let name = document.getElementById('exampleInputName').value;
+			let lastName = document.getElementById('exampleInputLstName').value;
+			let birthday = document.getElementById('exampleInputBirthday').value;
+			let sex = document.getElementById('exampleInputSex').value;
 
 			if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
 				alert('Todos los campos son obligatorios. Por favor, complete todos los campos.');
@@ -148,12 +148,12 @@
 
 
 		function validateFormModal() {
-			var name = document.getElementById('editName').value;
-			var lastName = document.getElementById('editLastName').value;
-			var birthday = document.getElementById('editBirthday').value;
-			var sex = document.getElementById('editSex').value;
+			let nameModal = document.getElementById('editName').value;
+			let lastNameModal = document.getElementById('editLastName').value;
+			let birthdayModal = document.getElementById('editBirthday').value;
+			let sexModal = document.getElementById('editSex').value;
 
-			if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
+			if (nameModal === '' || lastNameModal === '' || birthdayModal === '' || sexModal === 'Sexo') {
 				alert('Todos los campos son obligatorios. Por favor, complete todos los campos.');
 				return false;
 			}
