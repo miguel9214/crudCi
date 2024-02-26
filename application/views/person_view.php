@@ -91,9 +91,9 @@
 						<td><?php echo $person['sex']; ?></td>
 						<td>
 							<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal<?php echo $person['id']; ?>">
-								Editar
+								Edit
 							</button>
-							<a href="<?php echo base_url('person/delete/' . $person['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</a>
+							<a href="<?php echo base_url('person/delete/' . $person['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Delete</a>
 						</td>
 					</tr>
 					<div class="modal fade" id="editModal<?php echo $person['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
