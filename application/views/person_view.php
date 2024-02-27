@@ -143,60 +143,76 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-		<script>
+	<script>
+		function validateForm() {
+			let name = document.getElementById('exampleInputName').value;
+			let lastName = document.getElementById('exampleInputLstName').value;
+			let birthday = document.getElementById('exampleInputBirthday').value;
+			let sex = document.getElementById('exampleInputSex').value;
+
+			if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
+
+				Swal.fire({
+					title: 'Error!',
+					text: 'Debe llenar todos los campos',
+					icon: 'error',
+					confirmButtonText: 'Back'
+				})
+
+				return false;
+			}
+
+			<?php if ($this->session->flashdata('message')) : ?>
+				let message = <?php echo json_encode($this->session->flashdata('message')) ?>;
+				Swal.fire({
+					title: "Good job!",
+					text: message,
+					icon: "success",
+				}).then(() => {
+					setTimeout(() => {
+						location.reload(); // Recargar la página después de unos segundos
+					}, 3000); // 2000 milisegundos = 2 segundos (ajusta el tiempo según tus necesidades)
+				});
+			<?php endif; ?>
+
+			return true;
 
 
-			function validateForm() {
-				let name = document.getElementById('exampleInputName').value;
-				let lastName = document.getElementById('exampleInputLstName').value;
-				let birthday = document.getElementById('exampleInputBirthday').value;
-				let sex = document.getElementById('exampleInputSex').value;
-
-				if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
-
-					Swal.fire({
-						title: 'Error!',
-						text: 'Debe llenar todos los campos!',
-						icon: 'error',
-						confirmButtonText: 'Back'
-					})
-					return false;
+		}
 
 
-				}
 
-				return true;
+
+
+
+		function validateFormModal() {
+			let nameModal = document.getElementById('editName').value;
+			let lastNameModal = document.getElementById('editLastName').value;
+			let birthdayModal = document.getElementById('editBirthday').value;
+			let sexModal = document.getElementById('editSex').value;
+
+			if (nameModal === '' || lastNameModal === '' || birthdayModal === '' || sexModal === 'Sexo') {
+
+				Swal.fire({
+					title: 'Error!',
+					text: 'Debe llenar todos los campos!',
+					icon: 'error',
+					confirmButtonText: 'Back'
+				})
+
+				return false;
 			}
 
 
-			function validateFormModal() {
-				let nameModal = document.getElementById('editName').value;
-				let lastNameModal = document.getElementById('editLastName').value;
-				let birthdayModal = document.getElementById('editBirthday').value;
-				let sexModal = document.getElementById('editSex').value;
+			return true;
+		}
 
-				if (nameModal === '' || lastNameModal === '' || birthdayModal === '' || sexModal === 'Sexo') {
-
-					Swal.fire({
-						title: 'Error!',
-						text: 'Debe llenar todos los campos!',
-						icon: 'error',
-						confirmButtonText: 'Back'
-					})
-
-					return false;
-				}
-
-				
-				return true;
+		document.getElementById('saveChangesBtn').addEventListener('click', function(event) {
+			if (!validateFormModal()) {
+				event.preventDefault(); // Evitar que el formulario se envíe si no es válido
 			}
-
-			document.getElementById('saveChangesBtn').addEventListener('click', function(event) {
-				if (!validateFormModal()) {
-					event.preventDefault(); // Evitar que el formulario se envíe si no es válido
-				}
-			});
-		</script>
+		});
+	</script>
 </body>
 
 </html>

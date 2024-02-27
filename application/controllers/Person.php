@@ -52,10 +52,12 @@ class Person extends CI_Controller
 				$this->session->set_flashdata('message', 'Persona guardada exitosamente.');
 			} else {
 				// Guardar mensaje de error en la sesión
-				$this->session->set_flashdata('message', 'Error al guardar la persona en la base de datos.');
+				$this->session->set_flashdata('error', 'Error al guardar la persona en la base de datos.');
 			}
 	
-			redirect('person/index');
+			echo '<script>';
+			echo 'setTimeout(function() { window.location.href = "' . site_url('person/index') . '"; }, 300);'; // Redirige después de 2 segundos (ajusta según tus necesidades)
+			echo '</script>';
 		}
 	}
 	
