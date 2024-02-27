@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Person extends CI_Controller
 {
 
+	
 	public function __construct()
 	{
 
@@ -24,13 +25,13 @@ class Person extends CI_Controller
 	public function store()
 	{
 		$this->load->library('form_validation');
-
+	
 		// Reglas de validación
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'required');
 		$this->form_validation->set_rules('birthday', 'Birthday', 'required');
 		$this->form_validation->set_rules('sex', 'Sex', 'required');
-
+	
 		if ($this->form_validation->run() == FALSE) {
 			// Si la validación falla, vuelve a cargar la vista principal con errores
 			$data['persons'] = $this->Person_model->get_all_people();
@@ -43,12 +44,21 @@ class Person extends CI_Controller
 				'birthday' => $this->input->post('birthday'),
 				'sex' => $this->input->post('sex'),
 			);
-
-			$this->Person_model->insert_person($person);
-
+	
+			$inserted = $this->Person_model->insert_person($person);
+	
+			if ($inserted) {
+				// Guardar mensaje de éxito en la sesión
+				$this->session->set_flashdata('message', 'Persona guardada exitosamente.');
+			} else {
+				// Guardar mensaje de error en la sesión
+				$this->session->set_flashdata('message', 'Error al guardar la persona en la base de datos.');
+			}
+	
 			redirect('person/index');
 		}
 	}
+	
 
 	public function edit($id)
 	{

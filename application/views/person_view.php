@@ -11,22 +11,22 @@
 <body>
 	<!-- Navegador -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="<?php echo base_url('welcome'); ?>">CRUD CODEIGNITER</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+		<a class="navbar-brand" href="<?php echo base_url('welcome'); ?>">CRUD CODEIGNITER</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="<?php echo base_url('welcome'); ?>">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo site_url('person/index'); ?>">Persons</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="<?php echo base_url('welcome'); ?>">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo site_url('person/index'); ?>">Persons</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 	<!-- Formulario para guardar -->
 	<div class="container mt-4">
 		<?php echo form_open('person/store', 'onsubmit="return validateForm()"'); ?>
@@ -141,43 +141,62 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-	<script>
-		function validateForm() {
-			let name = document.getElementById('exampleInputName').value;
-			let lastName = document.getElementById('exampleInputLstName').value;
-			let birthday = document.getElementById('exampleInputBirthday').value;
-			let sex = document.getElementById('exampleInputSex').value;
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-			if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
-				alert('Todos los campos son obligatorios. Por favor, complete todos los campos.');
-				return false;
+		<script>
+
+
+			function validateForm() {
+				let name = document.getElementById('exampleInputName').value;
+				let lastName = document.getElementById('exampleInputLstName').value;
+				let birthday = document.getElementById('exampleInputBirthday').value;
+				let sex = document.getElementById('exampleInputSex').value;
+
+				if (name === '' || lastName === '' || birthday === '' || sex === 'Sexo') {
+
+					Swal.fire({
+						title: 'Error!',
+						text: 'Debe llenar todos los campos!',
+						icon: 'error',
+						confirmButtonText: 'Back'
+					})
+					return false;
+
+
+				}
+
+				return true;
 			}
 
-			return true;
-		}
 
+			function validateFormModal() {
+				let nameModal = document.getElementById('editName').value;
+				let lastNameModal = document.getElementById('editLastName').value;
+				let birthdayModal = document.getElementById('editBirthday').value;
+				let sexModal = document.getElementById('editSex').value;
 
-		function validateFormModal() {
-			let nameModal = document.getElementById('editName').value;
-			let lastNameModal = document.getElementById('editLastName').value;
-			let birthdayModal = document.getElementById('editBirthday').value;
-			let sexModal = document.getElementById('editSex').value;
+				if (nameModal === '' || lastNameModal === '' || birthdayModal === '' || sexModal === 'Sexo') {
 
-			if (nameModal === '' || lastNameModal === '' || birthdayModal === '' || sexModal === 'Sexo') {
-				alert('Todos los campos son obligatorios. Por favor, complete todos los campos.');
-				return false;
+					Swal.fire({
+						title: 'Error!',
+						text: 'Debe llenar todos los campos!',
+						icon: 'error',
+						confirmButtonText: 'Back'
+					})
+
+					return false;
+				}
+
+				
+				return true;
 			}
 
-			return true;
-		}
-
-		document.getElementById('saveChangesBtn').addEventListener('click', function (event) {
-            if (!validateFormModal()) {
-                event.preventDefault(); // Evitar que el formulario se envíe si no es válido
-            }
-        });
-		
-	</script>
+			document.getElementById('saveChangesBtn').addEventListener('click', function(event) {
+				if (!validateFormModal()) {
+					event.preventDefault(); // Evitar que el formulario se envíe si no es válido
+				}
+			});
+		</script>
 </body>
 
 </html>
