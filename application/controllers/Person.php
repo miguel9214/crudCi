@@ -56,7 +56,7 @@ class Person extends CI_Controller
 			}
 	
 			echo '<script>';
-			echo 'setTimeout(function() { window.location.href = "' . site_url('person/index') . '"; }, 300);'; // Redirige después de 2 segundos (ajusta según tus necesidades)
+			echo 'setTimeout(function() { window.location.href = "' . site_url('person/index') . '"; }, 400);'; // Redirige después de 2 segundos (ajusta según tus necesidades)
 			echo '</script>';
 		}
 	}
@@ -70,17 +70,37 @@ class Person extends CI_Controller
 
 	public function update($id)
 	{
+		$this->load->library('form_validation');
+	
+		// Reglas de validación
+		$this->form_validation->set_rules('edit_name', 'Name', 'required');
+		$this->form_validation->set_rules('edit_last_name', 'Last Name', 'required');
+		$this->form_validation->set_rules('edit_birthday', 'Birthday', 'required');
+		$this->form_validation->set_rules('edit_sex', 'Sex', 'required');
+	
+		if ($this->form_validation->run() == FALSE) {
+			// Si la validación falla, vuelve a cargar la vista de edición con errores
+			$data['person'] = $this->Person_model->get_person_by_id($id);
+			$this->load->view('person/edit', $data);
+		} else {
+			// Si la validación es exitosa, procesa los datos y redirige
+			$updated_data = array(
+				'name' => $this->input->post('edit_name'),
+				'last_name' => $this->input->post('edit_last_name'),
+				'birthday' => $this->input->post('edit_birthday'),
+				'sex' => $this->input->post('edit_sex')
+			);
+	
+			$this->Person_model->update_person($id, $updated_data);
+	
+			// Guardar mensaje de éxito en la sesión
+			$this->session->set_flashdata('message', 'Persona actualizada exitosamente.');
+	
+			echo '<script>';
+			echo 'setTimeout(function() { window.location.href = "' . site_url('person/index') . '"; }, 400);'; // Redirige después de 2 segundos (ajusta según tus necesidades)
+			echo '</script>';
+		}
 
-		$updated_data = array(
-			'name' => $this->input->post('edit_name'),
-			'last_name' => $this->input->post('edit_last_name'),
-			'birthday' => $this->input->post('edit_birthday'),
-			'sex' => $this->input->post('edit_sex')
-		);
-
-		$this->Person_model->update_person($id, $updated_data);
-
-		redirect('person/index');
 	}
 
 	public function delete($id)

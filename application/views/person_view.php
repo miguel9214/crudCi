@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Crud</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 
@@ -93,7 +93,8 @@
 							<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal<?php echo $person['id']; ?>">
 								Edit
 							</button>
-							<a href="<?php echo base_url('person/delete/' . $person['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Delete</a>
+							<button class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $person['id']; ?>">Delete</button>
+
 						</td>
 					</tr>
 					<div class="modal fade" id="editModal<?php echo $person['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -144,6 +145,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
+		//validacion para la funcion guardar
 		function validateForm() {
 			let name = document.getElementById('exampleInputName').value;
 			let lastName = document.getElementById('exampleInputLstName').value;
@@ -165,13 +167,13 @@
 			<?php if ($this->session->flashdata('message')) : ?>
 				let message = <?php echo json_encode($this->session->flashdata('message')) ?>;
 				Swal.fire({
-					title: "Good job!",
+					title: "Exito",
 					text: message,
 					icon: "success",
 				}).then(() => {
 					setTimeout(() => {
 						location.reload(); // Recargar la página después de unos segundos
-					}, 3000); // 2000 milisegundos = 2 segundos (ajusta el tiempo según tus necesidades)
+					}, 5000); // 2000 milisegundos = 2 segundos (ajusta el tiempo según tus necesidades)
 				});
 			<?php endif; ?>
 
@@ -180,11 +182,7 @@
 
 		}
 
-
-
-
-
-
+		//validacion para la funcion editar
 		function validateFormModal() {
 			let nameModal = document.getElementById('editName').value;
 			let lastNameModal = document.getElementById('editLastName').value;
@@ -197,11 +195,25 @@
 					title: 'Error!',
 					text: 'Debe llenar todos los campos!',
 					icon: 'error',
-					confirmButtonText: 'Back'
+					confirmButtonText: 'Back',
 				})
 
 				return false;
 			}
+
+			<?php if ($this->session->flashdata('message')) : ?>
+				let message = <?php echo json_encode($this->session->flashdata('message')) ?>;
+				Swal.fire({
+					title: "Exito!",
+					text: message,
+					icon: "success",
+				}).then(() => {
+					setTimeout(() => {
+						location.reload(); // Recargar la página después de unos segundos
+					}, 5000); // 2000 milisegundos = 2 segundos (ajusta el tiempo según tus necesidades)
+				});
+			<?php endif; ?>
+
 
 
 			return true;
@@ -211,6 +223,32 @@
 			if (!validateFormModal()) {
 				event.preventDefault(); // Evitar que el formulario se envíe si no es válido
 			}
+		});
+
+
+		//validacion para la funcion eliminar
+		document.querySelectorAll('.delete-btn').forEach(function(button) {
+			// Agrega un event listener para cada botón
+			button.addEventListener('click', function() {
+				// Obtiene el ID de la persona desde el atributo 'data-id' del botón
+				var personId = this.getAttribute('data-id');
+
+				// Muestra el cuadro de diálogo SweetAlert2 para confirmar la eliminación
+				Swal.fire({
+					title: '¿Estás seguro?',
+					text: '¡No podrás revertir esto!',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#d33',
+					cancelButtonColor: '#3085d6',
+					confirmButtonText: 'Sí, eliminarlo!'
+				}).then(function(result) {
+					// Si el usuario hace clic en "Sí, eliminarlo", redirige al controlador de eliminación
+					if (result.isConfirmed) {
+						window.location.href = '<?php echo base_url('person/delete/'); ?>' + personId;
+					}
+				});
+			});
 		});
 	</script>
 </body>
